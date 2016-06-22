@@ -16,7 +16,7 @@ const common = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel!eslint-loader',
+        loader: 'babel',
         exclude: /node_modules/,
       },
       {
