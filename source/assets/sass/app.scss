@@ -1,0 +1,110 @@
+@import './variables';
+
+body {
+  background-color: $color-bg;
+  color: $color-primary;
+  font-family: 'Arial';
+  cursor: default;
+}
+
+ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.queue-app {
+  display: flex;
+  width: 80%;
+  margin: 10% auto;
+
+  .search {
+    width: 30%;
+    background: darken($color-bg, 10);
+
+    > input {
+      width: 100%;
+      border: none;
+      outline: none;
+      line-height: 20px;
+      padding: 10px 15px;
+      box-sizing: border-box;
+      border-radius: 4px 0 0 0;
+    }
+
+    ul.search-results {
+      max-height: $max-height;
+      overflow: auto;
+
+      li {
+        border-bottom: 1px solid $color-secondary;
+        line-height: 1.5em;
+        padding: 5px 3px;
+
+        &:hover {
+          cursor: pointer;
+          background: lighten($color-bg, 10);
+        }
+      }
+    }
+  }
+  
+  .list {
+    margin-left: 10px;
+    width: 70%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+
+    ul {
+      max-height: $max-height;
+      overflow: auto;
+
+      li {
+        line-height: 1.5em;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        box-sizing: border-box;
+
+        .votes {
+          display: flex;
+
+          > * {
+            margin-left: 5px;
+            padding: 0px 5px;
+            font-size: 14px;
+
+            @include hover;
+          }
+
+          .counter {
+            background: transparent;
+            cursor: default;
+            min-width: 20px;
+            text-align: right;
+          }
+        }
+
+        &:first-child {
+          height: 40px;
+          line-height: 31px;
+          background-color: darken($color-bg, 10);
+          border-radius: 0 4px 0 0;
+        }
+      }
+    }
+
+    .play-controls {
+      width: 150px;
+      padding: 30px 5px 0px 5px;
+      display: flex;
+      justify-content: space-between;
+
+      > * {
+        padding: 3px 5px;
+        @include hover;
+      }
+    }
+  }
+}

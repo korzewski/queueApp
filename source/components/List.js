@@ -65,8 +65,7 @@ class List extends React.Component {
 		})
 
 		return (
-			<div>
-				<h2>List</h2>
+			<div className="list">
 				<ul>
 					{tracks}
 				</ul>
@@ -79,11 +78,11 @@ class List extends React.Component {
 const Track = (props) => {
 	return (
 		<li>
-			<div>
+			<div className="name">
 				{props.track.name}
 			</div>
-			<div>
-				<span>{props.track.votesCount}</span>
+			<div className="votes">
+				<span className="counter">{props.track.votesCount}</span>
 				<span onClick={() => props.voteTrack(props.track, true)}>up</span>
 				<span onClick={() => props.voteTrack(props.track, false)}>down</span>
 			</div>

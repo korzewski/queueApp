@@ -8,7 +8,7 @@ const emmiter = new EventEmmiter();
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div className="queue-app">
         <Input emmiter={emmiter} />
         <List emmiter={emmiter} />
       </div>

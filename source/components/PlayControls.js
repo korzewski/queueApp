@@ -6,10 +6,10 @@ let isNewTrackFlag = true;
 class PlayControls extends React.Component {
 	render() {
 		return (
-			<div>
-				<span onClick={this.playTrack.bind(this)}>play</span>
-				<span onClick={this.pauseTrack.bind(this)}>stop</span>
-				<span onClick={this.nextTrack.bind(this)}>next</span>
+			<div className="play-controls">
+				<div onClick={this.playTrack.bind(this)}>play</div>
+				<div onClick={this.pauseTrack.bind(this)}>stop</div>
+				<div onClick={this.nextTrack.bind(this)}>next</div>
 			</div>
 		)
 	}

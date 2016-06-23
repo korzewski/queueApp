@@ -20,7 +20,7 @@ const SearchResults = (props) => {
 	));
 
 	return (
-		<ul>
+		<ul className="search-results">
 			{list}
 		</ul>
 	);

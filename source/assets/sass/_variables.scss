@@ -1,0 +1,12 @@
+$color-bg: #555;
+$color-primary: #ddd;
+$color-secondary: #888;
+
+$max-height: 50vh;
+
+@mixin hover() {
+  &:hover {
+    background-color: darken($color-bg, 10);
+    cursor: pointer;
+  }
+}
