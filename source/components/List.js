@@ -1,4 +1,5 @@
 import React from 'react';
+import PlayControls from './PlayControls';
 
 class List extends React.Component {
 	constructor() {
@@ -10,6 +11,7 @@ class List extends React.Component {
 
 	componentDidMount() {
 		this.props.emmiter.on('addTrack', this.addTrack.bind(this))
+		this.props.emmiter.on('nextTrack', this.nextTrack.bind(this))
 	}
 
 	componentWillUnmount() {
@@ -25,6 +27,13 @@ class List extends React.Component {
 		});
 
 		this.setState({ queueTracks: tracks });
+	}
+
+	nextTrack() {
+		let tracks = this.state.queueTracks;
+		tracks.shift();
+		this.setState({ queueTracks: tracks })
+		this.props.emmiter.emit('playTrack');
 	}
 
 	voteTrack(track, status) {
@@ -61,6 +70,7 @@ class List extends React.Component {
 				<ul>
 					{tracks}
 				</ul>
+				<PlayControls queueTracks={this.state.queueTracks} emmiter={this.props.emmiter} />
 			</div>
 		)
 	}
