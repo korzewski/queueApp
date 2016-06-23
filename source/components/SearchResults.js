@@ -1,29 +1,37 @@
 import React from 'react';
 
-class SearchResults extends React.Component {
-	render() {
-		const items = this.props.items;
+const ListItem = (props) => {
+	return (
+		<li onClick={() => onTrackClick(props.emmiter, props.item)}>
+			<span>{props.item.name}</span>
+		</li>
+	)
+}
 
-		if(!items) {
-			return null;
-		}
+const SearchResults = (props) => {
+	const items = props.items;
 
-		const list = items.map((i, index) => (
-			<li key={index}>
-				<span>{i.name}</span>
-			</li>
-		));
-
-		return (
-			<ul>
-				{list}
-			</ul>
-		);
+	if(!items) {
+		return null;
 	}
+
+	const list = items.map((item, index) => (
+		<ListItem key={index} item={item} emmiter={props.emmiter}/>
+	));
+
+	return (
+		<ul>
+			{list}
+		</ul>
+	);
+}
+
+const onTrackClick = (emmiter, track) => {
+	emmiter.emit('addTrack', track);
 }
 
 export default SearchResults;
 
-SearchResults.propTypes = {
-	items: React.PropTypes.array
-}
+// SearchResults.propTypes = {
+// 	items: React.PropTypes.array
+// }
