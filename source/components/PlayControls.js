@@ -5,8 +5,10 @@ let isNewTrackFlag = true;
 
 class PlayControls extends React.Component {
 	render() {
+    const className = !this.props.queueTracks.length ? 'disabled' : '';
+
 		return (
-			<div className="play-controls">
+			<div className={'play-controls ' + className}>
 				<div onClick={this.playTrack.bind(this)}>play</div>
 				<div onClick={this.pauseTrack.bind(this)}>stop</div>
 				<div onClick={this.nextTrack.bind(this)}>next</div>
@@ -36,7 +38,6 @@ class PlayControls extends React.Component {
 	}
 
 	nextTrack() {
-		console.log('track end');
 		isNewTrackFlag = true;
 		this.pauseTrack();
 		this.props.emmiter.emit('nextTrack');

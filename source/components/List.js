@@ -1,5 +1,6 @@
 import React from 'react';
 import PlayControls from './PlayControls';
+import Track from './Track';
 
 class List extends React.Component {
 	constructor() {
@@ -50,18 +51,23 @@ class List extends React.Component {
 	}
 
 	sortTracks() {
+		let currentTrack = this.state.queueTracks[0];
+		let sortedTracks = this.state.queueTracks.sort((a, b) => {
+			if(a === currentTrack) {
+				return false;
+			}
+
+			return b.votesCount - a.votesCount
+		});
+
 		this.setState({
-			queueTracks: this.state.queueTracks.sort((a, b) => { return b.votesCount - a.votesCount })
+			queueTracks: sortedTracks
 		})
 	}
 
 	render() {
-		if(!this.state.queueTracks.length){
-			return null
-		}
-
 		const tracks = this.state.queueTracks.map((track, index) => {
-			return <Track key={index} track={track} voteTrack={this.voteTrack.bind(this)} />
+			return <Track key={index} track={track} voteTrack={this.voteTrack.bind(this)} index={index} />
 		})
 
 		return (
@@ -73,21 +79,6 @@ class List extends React.Component {
 			</div>
 		)
 	}
-}
-
-const Track = (props) => {
-	return (
-		<li>
-			<div className="name">
-				{props.track.name}
-			</div>
-			<div className="votes">
-				<span className="counter">{props.track.votesCount}</span>
-				<span onClick={() => props.voteTrack(props.track, true)}>up</span>
-				<span onClick={() => props.voteTrack(props.track, false)}>down</span>
-			</div>
-		</li>
-	)
 }
 
 export default List;

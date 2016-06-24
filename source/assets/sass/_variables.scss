@@ -10,3 +10,20 @@ $max-height: 50vh;
     cursor: pointer;
   }
 }
+
+ @mixin breakpoint($point) {
+  @if $point == mobile {
+     @media (max-width: 37.5em) { @content ; }
+  }
+}
+
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+}

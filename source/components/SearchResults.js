@@ -1,12 +1,5 @@
 import React from 'react';
-
-const ListItem = (props) => {
-	return (
-		<li onClick={() => onTrackClick(props.emmiter, props.item)}>
-			<span>{props.item.name}</span>
-		</li>
-	)
-}
+import SearchResultsItem from './SearchResultsItem';
 
 const SearchResults = (props) => {
 	const items = props.items;
@@ -16,7 +9,7 @@ const SearchResults = (props) => {
 	}
 
 	const list = items.map((item, index) => (
-		<ListItem key={index} item={item} emmiter={props.emmiter}/>
+		<SearchResultsItem key={index} item={item} emmiter={props.emmiter}/>
 	));
 
 	return (
@@ -24,10 +17,6 @@ const SearchResults = (props) => {
 			{list}
 		</ul>
 	);
-}
-
-const onTrackClick = (emmiter, track) => {
-	emmiter.emit('addTrack', track);
 }
 
 export default SearchResults;

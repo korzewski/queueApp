@@ -5,6 +5,8 @@ body {
   color: $color-primary;
   font-family: 'Arial';
   cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 ul {
@@ -18,9 +20,19 @@ ul {
   width: 80%;
   margin: 10% auto;
 
+  @include breakpoint(mobile) {
+    flex-flow: column nowrap;
+  }
+
   .search {
     width: 30%;
     background: darken($color-bg, 10);
+
+    @include breakpoint(mobile) {
+      order: 1;
+      width: 100%;
+      margin-top: 15px;
+    }
 
     > input {
       width: 100%;
@@ -30,20 +42,59 @@ ul {
       padding: 10px 15px;
       box-sizing: border-box;
       border-radius: 4px 0 0 0;
+
+      @include breakpoint(mobile) {
+        border-radius: 4px 4px 0 0;
+      }
     }
 
     ul.search-results {
-      max-height: $max-height;
+      height: $max-height;
       overflow: auto;
 
+      @include breakpoint(mobile) {
+        height: auto;
+      }
+
       li {
-        border-bottom: 1px solid $color-secondary;
-        line-height: 1.5em;
-        padding: 5px 3px;
+        display: flex;
+        flex-flow: row nowrap;
+        border-bottom: 1px solid darken($color-bg, 12);
+        padding: 5px;
+
+        .cover-image {
+          width: 50%;
+          overflow: hidden;
+          @include aspect-ratio(1, 1);
+
+          img {
+            width: 100%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+          }
+        }
+
+        .track-details {
+          width: 50%;
+          padding: 0px 10px;
+          box-sizing: border-box;
+          font-size: 14px;
+
+          .artist {
+            opacity: 0.7;
+          }
+        }
 
         &:hover {
           cursor: pointer;
-          background: lighten($color-bg, 10);
+          background: lighten($color-bg, 1);
+
+          .cover-image img {
+            transform: translate(-50%, -50%) scale(1.05);
+          }
         }
       }
     }
@@ -56,8 +107,13 @@ ul {
     flex-flow: column nowrap;
     justify-content: space-between;
 
+    @include breakpoint(mobile) {
+      width: 100%;
+      margin-left: 0px;
+    }
+
     ul {
-      max-height: $max-height;
+      height: $max-height;
       overflow: auto;
 
       li {
@@ -91,6 +147,10 @@ ul {
           line-height: 31px;
           background-color: darken($color-bg, 10);
           border-radius: 0 4px 0 0;
+
+          @include breakpoint(mobile) {
+            border-radius: 4px 4px 0 0;
+          }
         }
       }
     }
@@ -101,9 +161,23 @@ ul {
       display: flex;
       justify-content: space-between;
 
+      @include breakpoint(mobile) {
+        width: auto;
+        padding: 5px;
+        border-bottom: 1px solid darken($color-bg, 10);
+      }
+
       > * {
         padding: 3px 5px;
         @include hover;
+      }
+
+      &.disabled {
+        > * {
+          opacity: 0.2;
+          cursor: default;
+          background: transparent;
+        }
       }
     }
   }
