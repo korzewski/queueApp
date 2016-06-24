@@ -3,12 +3,12 @@ import React from 'react';
 const Track = (props) => {
   let votes = null;
 
-  if(props.index != 0) {
+  if (props.index !== 0) {
     votes = (
       <div className="votes">
         <span className="counter">{props.track.votesCount}</span>
-        <span onClick={() => props.voteTrack(props.track, true)}>up</span>
-        <span onClick={() => props.voteTrack(props.track, false)}>down</span>
+        <span onClick={() => props.voteTrack(props.index, true)}>up</span>
+        <span onClick={() => props.voteTrack(props.index, false)}>down</span>
       </div>
     );
   }
@@ -20,7 +20,12 @@ const Track = (props) => {
       </div>
       {votes}
     </li>
-  )
-}
+  );
+};
+
+Track.propTypes = {
+  track: React.PropTypes.object,
+  index: React.PropTypes.number,
+};
 
 export default Track;

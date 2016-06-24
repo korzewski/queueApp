@@ -1,60 +1,65 @@
 import React from 'react';
 
-let audio = new Audio();
+const audio = new Audio();
 let isNewTrackFlag = true;
 
 class PlayControls extends React.Component {
-	render() {
-    const className = !this.props.queueTracks.length ? 'disabled' : '';
+  componentDidMount() {
+    this.props.emmiter.on('playTrack', this.playTrack.bind(this));
+    audio.addEventListener('ended', this.onTrackEnd.bind(this));
+  }
 
-		return (
-			<div className={'play-controls ' + className}>
-				<div onClick={this.playTrack.bind(this)}>play</div>
-				<div onClick={this.pauseTrack.bind(this)}>stop</div>
-				<div onClick={this.nextTrack.bind(this)}>next</div>
-			</div>
-		)
-	}
+  componentWillUnmount() {
+    audio.removeEventListener('ended', this.onTrackEnd);
+  }
 
-	getCurrentTrackUrl() {
-		return this.props.queueTracks[0].preview_url;
-	}
+  onTrackEnd() {
+    this.nextTrack();
+  }
 
-	playTrack() {
-		if(this.props.queueTracks.length) {
-			if(isNewTrackFlag) {
-				isNewTrackFlag = false;
+  getCurrentTrackUrl() {
+    return this.props.queueTracks[0].preview_url;
+  }
 
-				const trackUrl = this.getCurrentTrackUrl();
-				audio.src = trackUrl;
-			}
+  playTrack() {
+    if (this.props.queueTracks.length) {
+      if (isNewTrackFlag) {
+        isNewTrackFlag = false;
 
-			audio.play();
-		}
-	}
+        const trackUrl = this.getCurrentTrackUrl();
+        audio.src = trackUrl;
+      }
 
-	pauseTrack() {
-		audio.pause();
-	}
+      audio.play();
+    }
+  }
 
-	nextTrack() {
-		isNewTrackFlag = true;
-		this.pauseTrack();
-		this.props.emmiter.emit('nextTrack');
-	}
+  nextTrack() {
+    isNewTrackFlag = true;
+    this.pauseTrack();
+    this.props.emmiter.emit('nextTrack');
+  }
 
-	onTrackEnd() {
-		this.nextTrack();
-	}
+  pauseTrack() {
+    audio.pause();
+  }
 
-	componentDidMount() {
-		this.props.emmiter.on('playTrack', this.playTrack.bind(this));
-		audio.addEventListener('ended', this.onTrackEnd.bind(this));
-	}
+  render() {
+    const className = !this.props.queueTracks.length ? 'play-controls disabled' : 'play-controls';
 
-	componentWillUnmount() {
-		audio.removeEventListener('ended', this.onTrackEnd);
-	}
+    return (
+      <div className={className}>
+        <div onClick={() => this.playTrack()}>play</div>
+        <div onClick={() => this.pauseTrack()}>stop</div>
+        <div onClick={() => this.nextTrack()}>next</div>
+      </div>
+    );
+  }
 }
+
+PlayControls.propTypes = {
+  queueTracks: React.PropTypes.array,
+  emmiter: React.PropTypes.object,
+};
 
 export default PlayControls;
